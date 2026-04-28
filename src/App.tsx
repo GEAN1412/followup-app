@@ -57,6 +57,7 @@ export default function App() {
   const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
   // Admin Tracking State
   const [searchPic, setSearchPic] = useState('');
@@ -365,6 +366,37 @@ export default function App() {
           </AnimatePresence>
         </div>
 
+        {/* Image Preview Modal */}
+        <AnimatePresence>
+          {previewImageUrl && (
+            <div 
+              className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-zoom-out"
+              onClick={() => setPreviewImageUrl(null)}
+            >
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button 
+                  onClick={() => setPreviewImageUrl(null)}
+                  className="absolute -top-12 right-0 p-2 text-white/70 hover:text-white transition-colors bg-white/10 hover:bg-white/20 rounded-full"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <img 
+                  src={previewImageUrl} 
+                  className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl border border-white/10" 
+                  alt="Preview Screenshot"
+                  referrerPolicy="no-referrer"
+                />
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         {/* Delete Confirmation Modal */}
         <AnimatePresence>
           {confirmDeleteId && (
@@ -581,7 +613,12 @@ export default function App() {
                       ) : (
                         followups.slice(0, 5).map(f => (
                           <div key={f.id} className="group p-4 flex gap-4 hover:bg-gray-50/50 transition-colors relative">
-                            <img src={f.screenshotUrl} className="w-16 h-16 rounded-lg object-cover bg-gray-100 flex-shrink-0" referrerPolicy="no-referrer" />
+                            <div className="relative group/img cursor-zoom-in" onClick={() => setPreviewImageUrl(f.screenshotUrl)}>
+                              <img src={f.screenshotUrl} className="w-16 h-16 rounded-lg object-cover bg-gray-100 flex-shrink-0 border border-gray-100" referrerPolicy="no-referrer" />
+                              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                <Search className="w-4 h-4 text-white" />
+                              </div>
+                            </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2 mb-1">
                                 <span className="text-[10px] font-bold text-natural-text-dark">{f.date}</span>
@@ -711,7 +748,12 @@ export default function App() {
                               <td className="px-6 py-4 max-w-[200px] truncate">{f.caption}</td>
                               <td className="px-6 py-4 text-right">
                                 <div className="flex items-center justify-end gap-3">
-                                  <a href={f.screenshotUrl} target="_blank" rel="noreferrer" className="text-natural-primary font-bold hover:underline">Detail</a>
+                                  <button 
+                                    onClick={() => setPreviewImageUrl(f.screenshotUrl)}
+                                    className="text-natural-primary font-bold hover:underline"
+                                  >
+                                    Detail
+                                  </button>
                                   <button onClick={() => { setActiveTab(CATEGORIES[0]); handleEdit(f); }} className="text-amber-500 hover:text-amber-600 transition-colors">
                                     <Pencil className="w-3.5 h-3.5" />
                                   </button>
