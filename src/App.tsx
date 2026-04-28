@@ -299,7 +299,7 @@ export default function App() {
               <CheckCircle2 className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="font-serif text-lg font-bold text-natural-text-dark leading-none">LaundraTrack</h1>
+              <h1 className="font-serif text-lg font-bold text-natural-text-dark leading-none">Dina Laundry CS Tracking</h1>
               <p className="text-[10px] text-natural-text-muted uppercase tracking-wider mt-1">CS Follow-up Tracker</p>
             </div>
           </div>
@@ -324,10 +324,10 @@ export default function App() {
 
         <div className="mt-8 p-4 bg-gray-50 rounded-2xl border border-natural-border">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-natural-border flex items-center justify-center text-natural-text-dark font-bold text-xs">SA</div>
+            <div className="w-8 h-8 rounded-full bg-natural-border flex items-center justify-center text-natural-text-dark font-bold text-xs">GP</div>
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-natural-text-dark truncate">Siti Aminah</p>
-              <p className="text-[10px] text-natural-text-muted">Customer Service</p>
+              <p className="text-xs font-semibold text-natural-text-dark truncate">Gean Pratama</p>
+              <p className="text-[10px] text-natural-text-muted">Created By</p>
             </div>
           </div>
         </div>

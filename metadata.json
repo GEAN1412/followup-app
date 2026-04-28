@@ -1,5 +1,5 @@
 {
-  "name": "Track Laundry Follow-up",
+  "name": "Dina Laundry CS Tracking",
   "description": "A comprehensive tracking tool for laundry customer follow-ups featuring PIC tracking, screenshot evidence integration with Cloudinary, and administrative reporting.",
   "requestFramePermissions": [
     "camera"
