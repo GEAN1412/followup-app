@@ -29,5 +29,9 @@ service cloud.firestore {
     match /followups/{followupId} {
       allow read, write: if true;
     }
+
+    match /progress/{progressId} {
+      allow read, write: if true;
+    }
   }
 }

@@ -41,12 +41,67 @@
         }
       },
       "required": ["date", "customerName", "customerPhone", "pic", "caption", "screenshotUrl", "monthYear", "timestamp"]
+    },
+    "Progress": {
+      "title": "Progress Follow Up",
+      "description": "Data hasil pengecekan follow up setelah 4 hari",
+      "type": "object",
+      "properties": {
+        "followupId": {
+          "type": "string",
+          "description": "ID data follow up asal"
+        },
+        "customerName": {
+          "type": "string",
+          "description": "Nama konsumen"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["Ada feedback", "Tidak ada respon", "Konsumen respon tapi tidak ada feedback"],
+          "description": "Hasil akhir follow up"
+        },
+        "channels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Media feedback (WhatsApp, Google, Instagram)"
+        },
+        "pic": {
+          "type": "string",
+          "description": "Nama PIC Progress"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal progress dilakukan"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Keterangan tambahan"
+        },
+        "screenshotUrl": {
+          "type": "string",
+          "description": "URL screenshot bukti progress di Cloudinary"
+        },
+        "monthYear": {
+          "type": "string",
+          "description": "Bulan dan tahun progress (MM-YYYY)"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["followupId", "customerName", "outcome", "channels", "pic", "date", "caption", "screenshotUrl", "monthYear", "timestamp"]
     }
   },
   "firestore": {
     "followups/{followupId}": {
       "schema": "FollowUp",
       "description": "Koleksi data follow up konsumen"
+    },
+    "progress/{progressId}": {
+      "schema": "Progress",
+      "description": "Koleksi data progress follow up"
     }
   }
 }

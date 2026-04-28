@@ -37,7 +37,7 @@ app.post('/api/upload', upload.single('screenshot'), async (req: any, res: any) 
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const { date, pic } = req.body;
+    const { date, pic, targetFolder, customerName } = req.body;
     if (!date || !pic) {
       return res.status(400).json({ error: 'Missing date or PIC' });
     }
@@ -47,13 +47,19 @@ app.post('/api/upload', upload.single('screenshot'), async (req: any, res: any) 
     const month = String(dateObj.getMonth() + 1).padStart(2, '0');
     const day = String(dateObj.getDate()).padStart(2, '0');
     
-    const folderName = `${month}-${year}`;
-    const fileName = `${day}${year}-${pic.replace(/\s+/g, '_').toLowerCase()}-${Date.now()}`;
+    const folderDate = `${month}-${year}`;
+    const baseFolder = targetFolder === 'progress' ? 'progress' : 'laundry_followups';
+    
+    // Custom name for progress: [konsumen]_[tanggal]_[tahun]_[pic]
+    let fileName = `${day}${year}-${pic.replace(/\s+/g, '_').toLowerCase()}-${Date.now()}`;
+    if (targetFolder === 'progress' && customerName) {
+      fileName = `${customerName.replace(/\s+/g, '_').toLowerCase()}_${day}_${year}_${pic.replace(/\s+/g, '_').toLowerCase()}`;
+    }
 
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          folder: `laundry_followups/${folderName}`,
+          folder: `${baseFolder}/${folderDate}`,
           public_id: fileName,
           resource_type: 'auto'
         },
@@ -72,6 +78,40 @@ app.post('/api/upload', upload.single('screenshot'), async (req: any, res: any) 
   } catch (error: any) {
     console.error('Upload handler error:', error);
     res.status(500).json({ error: error.message || 'Upload failed' });
+  }
+});
+
+// API Route for Bulk Delete Cloudinary Folder (Admin only conceptually)
+app.post('/api/bulk-delete', async (req: any, res: any) => {
+  try {
+    if (!checkCloudinaryConfig()) {
+      throw new Error('Cloudinary not configured.');
+    }
+
+    const { monthYear, category } = req.body; // e.g. "04-2026", "followups" | "progress"
+    if (!monthYear || !category) {
+      return res.status(400).json({ error: 'MonthYear and category are required' });
+    }
+
+    const baseFolder = category === 'progress' ? 'progress' : 'laundry_followups';
+    const folderPath = `${baseFolder}/${monthYear}`;
+
+    // Cloudinary Admin API to delete resources by prefix
+    // Note: requires API Secret to be able to use 'api' methods
+    // We use cloudinary.v2.api.delete_resources_by_prefix
+    const result = await cloudinary.api.delete_resources_by_prefix(folderPath);
+    
+    // Also delete the folder itself if it exists (optional but clean)
+    try {
+      await cloudinary.api.delete_folder(folderPath);
+    } catch (e) {
+      console.warn('Folder deletion skipped (maybe not empty or not supported):', e);
+    }
+
+    res.json({ result });
+  } catch (error: any) {
+    console.error('Bulk delete error:', error);
+    res.status(500).json({ error: error.message || 'Bulk delete failed' });
   }
 });
 

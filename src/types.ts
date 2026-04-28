@@ -35,3 +35,29 @@ export interface FollowUpData {
   monthYear: string;
   timestamp: any; // Server Timestamp
 }
+
+export enum ProgressOutcome {
+  ADA_FEEDBACK = 'Ada feedback',
+  TIDAK_ADA_RESPON = 'Tidak ada respon',
+  RESPON_TANPA_FEEDBACK = 'Konsumen respon tapi tidak ada feedback'
+}
+
+export enum ProgressChannel {
+  WHATSAPP = 'WhatsApp',
+  GOOGLE = 'Google',
+  INSTAGRAM = 'Instagram'
+}
+
+export interface ProgressData {
+  id?: string;
+  followupId: string;
+  customerName: string; // From sibling
+  outcome: ProgressOutcome;
+  channels: ProgressChannel[];
+  pic: string;
+  date: string;
+  caption: string;
+  screenshotUrl: string;
+  monthYear: string;
+  timestamp: any;
+}
