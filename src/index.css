@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Libre Baskerville", serif;
+
+  --color-natural-bg: #F3F4ED;
+  --color-natural-primary: #6B8E23;
+  --color-natural-primary-hover: #55721C;
+  --color-natural-text-dark: #3A412E;
+  --color-natural-text-muted: #7C846C;
+  --color-natural-border: #E6E9DF;
+  --color-natural-card: #FFFFFF;
+  --color-natural-sidebar-link: #5C634D;
+}
+
+@layer components {
+  .card-natural {
+    @apply bg-white rounded-[20px] shadow-[0_4px_15px_rgba(107,142,35,0.05)] border border-natural-border;
+  }
+
+  .btn-natural-primary {
+    @apply bg-natural-primary text-white transition-colors duration-200 hover:bg-natural-primary-hover;
+  }
+
+  .sidebar-link-natural {
+    @apply text-natural-sidebar-link font-medium flex items-center p-3 rounded-xl transition-all;
+  }
+}

@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidFollowUp(data) {
+      let requiredFields = ['date', 'customerName', 'customerPhone', 'pic', 'caption', 'screenshotUrl', 'monthYear', 'timestamp'];
+      return data.keys().hasAll(requiredFields)
+             && data.date is string
+             && data.customerName is string && data.customerName.size() <= 255
+             && data.customerPhone is string && data.customerPhone.size() <= 50
+             && data.pic is string && data.pic.size() <= 150
+             && data.caption is string && data.caption.size() <= 2000
+             && data.screenshotUrl is string && data.screenshotUrl.size() <= 1000
+             && data.monthYear is string && data.monthYear.size() <= 20
+             && data.timestamp == request.time;
+    }
+
+    match /followups/{followupId} {
+      allow read, write: if true;
+    }
+  }
+}

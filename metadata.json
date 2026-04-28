@@ -1,0 +1,8 @@
+{
+  "name": "Track Laundry Follow-up",
+  "description": "A comprehensive tracking tool for laundry customer follow-ups featuring PIC tracking, screenshot evidence integration with Cloudinary, and administrative reporting.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}

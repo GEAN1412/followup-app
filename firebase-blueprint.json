@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "FollowUp": {
+      "title": "Follow Up",
+      "description": "Data tracking follow-up konsumen laundry",
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal follow up dilakukan"
+        },
+        "customerName": {
+          "type": "string",
+          "description": "Nama konsumen yang di-follow up"
+        },
+        "customerPhone": {
+          "type": "string",
+          "description": "Nomor WhatsApp/HP konsumen"
+        },
+        "pic": {
+          "type": "string",
+          "description": "Nama person in charge (PIC) yang melakukan follow up"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Isi pesan atau hasil follow up"
+        },
+        "screenshotUrl": {
+          "type": "string",
+          "description": "URL screenshot bukti follow up di Cloudinary"
+        },
+        "monthYear": {
+          "type": "string",
+          "description": "Bulan dan tahun follow up (MM-YYYY) untuk pengelompokan"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu data diinput ke sistem"
+        }
+      },
+      "required": ["date", "customerName", "customerPhone", "pic", "caption", "screenshotUrl", "monthYear", "timestamp"]
+    }
+  },
+  "firestore": {
+    "followups/{followupId}": {
+      "schema": "FollowUp",
+      "description": "Koleksi data follow up konsumen"
+    }
+  }
+}
