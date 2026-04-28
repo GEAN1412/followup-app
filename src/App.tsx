@@ -299,7 +299,7 @@ export default function App() {
               <CheckCircle2 className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="font-serif text-lg font-bold text-natural-text-dark leading-none">LaundraTrack</h1>
+              <h1 className="font-serif text-lg font-bold text-natural-text-dark leading-none">LaundryMonitoringTrack</h1>
               <p className="text-[10px] text-natural-text-muted uppercase tracking-wider mt-1">CS Follow-up Tracker</p>
             </div>
           </div>
