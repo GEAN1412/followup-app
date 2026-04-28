@@ -326,8 +326,8 @@ export default function App() {
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-natural-border flex items-center justify-center text-natural-text-dark font-bold text-xs">SA</div>
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-natural-text-dark truncate">Siti Aminah</p>
-              <p className="text-[10px] text-natural-text-muted">Customer Service</p>
+              <p className="text-xs font-semibold text-natural-text-dark truncate">Gean Pratama</p>
+              <p className="text-[10px] text-natural-text-muted">Created By</p>
             </div>
           </div>
         </div>
